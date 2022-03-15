@@ -20,7 +20,7 @@ func (c *configuration) configFor(org, repo string) *botConfig {
 	if i := config.Find(org, repo, v); i >= 0 {
 		return &items[i]
 	}
-	
+
 	return nil
 }
 
@@ -35,7 +35,7 @@ func (c *configuration) Validate() error {
 			return err
 		}
 	}
-	
+
 	return nil
 }
 
@@ -52,6 +52,14 @@ func (c *configuration) SetDefault() {
 
 type botConfig struct {
 	config.RepoFilter
+	// EnableSyncIssue control whether synchronization issues, default false.
+	EnableSyncIssue bool `json:"enable_sync_issue,omitempty"`
+	// EnableSyncComment control whether synchronization comments, default false.
+	EnableSyncComment bool `json:"enable_sync_comment,omitempty"`
+	// DoNotSyncAuthors the person configured by this configuration item as the author of
+	// the issue or comment will not need to synchronize.
+	// in addition, if it is empty the current robot account is default.
+	DoNotSyncAuthors []string `json:"do_not_sync_authors,omitempty"`
 }
 
 func (c *botConfig) setDefault() {
