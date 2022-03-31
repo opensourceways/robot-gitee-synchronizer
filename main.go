@@ -78,17 +78,19 @@ func main() {
 		return string(secretAgent.GetTokenGenerator(p)())
 	}
 
-	syncCli, err := sync.NewSynchronize(o.syncEndpoint, f(o.akPath), f(o.skPath), o.region, c)
+	v, err := c.GetBot()
+	if err != nil {
+		logrus.WithError(err).Fatal("Error get bot name")
+	}
+
+	bName := strings.ToLower(v.Name)
+
+	syncCli, err := sync.NewSynchronize(o.syncEndpoint, f(o.akPath), f(o.skPath), o.region, c, bName)
 	if err != nil {
 		logrus.WithError(err).Fatal("error init synchronizer.")
 	}
 
-	v, err := c.GetBot()
-	if err != nil {
-		logrus.WithError(err).Error("Error get bot name")
-	}
-
-	r := newRobot(syncCli, strings.ToLower(v.Name))
+	r := newRobot(syncCli, bName)
 
 	framework.Run(r, o.service)
 }

@@ -22,6 +22,12 @@ type reqComment struct {
 	Content string `json:"content"`
 }
 
+type reqUpdateIssueState struct {
+	orgRepo
+	Number string `json:"number"`
+	State  string `json:"state"`
+}
+
 type issueSyncedInfo struct {
 	orgRepo
 	Number string
@@ -34,11 +40,11 @@ type issueSyncedResp struct {
 }
 
 type issueSyncedRelation struct {
+	IsOrigin         bool   `json:"is_origin"`
 	GiteeOrg         string `json:"gitee_org"`
 	GiteeRepo        string `json:"gitee_repo"`
 	GiteeIssueNumber string `json:"gitee_issue_number"`
-
-	GithubOrg    string `json:"github_org"`
-	GithubRepo   string `json:"github_repo"`
-	GithubNumber string `json:"github_number"`
+	GithubOrg        string `json:"github_org"`
+	GithubRepo       string `json:"github_repo"`
+	GithubNumber     string `json:"github_number"`
 }
