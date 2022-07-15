@@ -99,11 +99,9 @@ func (sc *Synchronize) HandleSyncIssueToGitHub(org, repo string, e *sdk.IssueHoo
 // HandleSyncIssueComment synchronize the comments of the gitee platform Issue to the Github platform
 func (sc *Synchronize) HandleSyncIssueComment(org, repo string, e *sdk.NoteEvent, cfg *config.BotConfig) error {
 	if !sc.needSyncIssueComment(cfg, e.GetComment()) {
-		if !sc.needSyncIssueComment(cfg, e.GetComment()) {
-			logrus.Info("Comment %s does't need to be synchronized", e.GetComment().GetHtmlUrl())
+		logrus.Info("Comment %s does't need to be synchronized", e.GetComment().GetHtmlUrl())
 
-			return nil
-		}
+		return nil
 	}
 
 	info, err := sc.findSyncedIssueInfoFromComments(org, repo, e.GetIssueNumber())
