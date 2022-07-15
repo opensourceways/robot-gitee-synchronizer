@@ -83,7 +83,7 @@ func main() {
 		logrus.WithError(err).Fatal("Error get bot name")
 	}
 
-	bName := strings.ToLower(v.Name)
+	bName := strings.ToLower(v.Login)
 
 	syncCli, err := sync.NewSynchronize(o.syncEndpoint, f(o.akPath), f(o.skPath), o.region, c, bName)
 	if err != nil {
